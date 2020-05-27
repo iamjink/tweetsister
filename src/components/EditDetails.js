@@ -1,18 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import MyButton from '../util/MyButton';
 //Redux
 import { connect } from 'react-redux';
 import { editUserDetails } from '../redux/actions/userActions';
 //MUI stuff
-import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
 //Icons
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -20,41 +19,8 @@ const styles = (theme) => ({
 	typography: {
 		useNextVariants: true
 	  },
-	  form: {
-		textAlign: 'center'
-	  },
-	  image: {
-		margin: '20px auto 20px auto'
-	  },
-	  pageTitle: {
-		margin: '10px auto 10px auto'
-	  },
-	  textField: {
-		margin: '10px auto 10px auto'
-	  },
 	  button: {
-		marginTop: 20,
-		position: 'relative'
-	  },
-	  customError: {
-		color: 'red',
-		fontSize: '0.8rem',
-		marginTop: 10
-	  },
-	  progress: {
-		position: 'absolute'
-	  },
-	  invisibleSeparator: {
-		border: 'none',
-		margin: 4
-	  },
-	  visibleSeparator: {
-		width: '100%',
-		borderBottom: '1px solid rgba(0,0,0,0.1)',
-		marginBottom: 20
-	  },
-	  paper: {
-		padding: 20
+		float:'right'
 	  },
 	  profile: {
 		'& .image-wrapper': {
@@ -149,11 +115,9 @@ class EditDetails extends Component {
 		const { classes } = this.props;
 		return (
 			<Fragment>
-				<Tooltip title="Edit details" placement="top">
-					<IconButton onClick={this.handleOpen} className={classes.button}>
-						<EditIcon color="primary" />
-					</IconButton>
-				</Tooltip>
+				<MyButton tip='Edit Details' onClick={this.handleOpen} btnClassName ={classes.button}>
+					<EditIcon color='primary' />
+				</MyButton>
 				<Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
 					<DialogTitle> Edit your details</DialogTitle>
 					<DialogContent>
