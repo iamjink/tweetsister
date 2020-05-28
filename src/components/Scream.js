@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import MyButton from '../util/MyButton';
+import DeleteScream from './DeleteScream'
 // MUI Stuff
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -20,6 +21,7 @@ import { likeScream, unlikeScream } from '../redux/actions/dataActions';
 
 const styles = {
 	card: {
+		position: 'relative',
 		display: 'flex',
 		marginBottom: 20
 	},
@@ -54,7 +56,7 @@ class Scream extends Component {
 		const {
 			classes,
 			scream: { body, createdAt, userImage, userHandle, screamId, likeCount, commentCount },
-			user: { authenticated }
+			user: { authenticated, credentials: { handle } }
 		} = this.props;
 
 		const likeButton = !authenticated ? (
@@ -73,6 +75,8 @@ class Scream extends Component {
 			</MyButton>
 		);
 
+		const deleteButton = authenticated && userHandle === handle ? <DeleteScream screamId={screamId} /> : null;
+
 		return (
 			<Card className={classes.card}>
 				<CardMedia image={userImage} title="profile image" className={classes.image} />{' '}
@@ -81,6 +85,7 @@ class Scream extends Component {
 						{' '}
 						{userHandle}
 					</Typography>
+				
 					<Typography variant="body2" color="textSecondary">
 						{' '}
 						{/* converts toISOSstring to relative time from now */}
@@ -95,7 +100,8 @@ class Scream extends Component {
 					<MyButton tip="comments">
 						<ChatIcon color="primary" />
 					</MyButton>
-					<span>{commentCount} comments</span>
+					<span>{commentCount} comments</span>	
+					{deleteButton}
 				</CardContent>
 			</Card>
 		);
