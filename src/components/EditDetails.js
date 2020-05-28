@@ -15,7 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //Icons
 import EditIcon from '@material-ui/icons/Edit';
 
-const styles = (theme) => ({
+const styles = {
 	typography: {
 		useNextVariants: true
 	  },
@@ -64,7 +64,7 @@ const styles = (theme) => ({
 		  margin: '20px 10px'
 		}
 	  }
-});
+};
 
 class EditDetails extends Component {
 	state = {

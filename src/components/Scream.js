@@ -75,6 +75,7 @@ class Scream extends Component {
 			</MyButton>
 		);
 
+		//delete button shows up if user is logged in and user handle of post is the same as the loggedin user
 		const deleteButton = authenticated && userHandle === handle ? <DeleteScream screamId={screamId} /> : null;
 
 		return (
@@ -85,7 +86,6 @@ class Scream extends Component {
 						{' '}
 						{userHandle}
 					</Typography>
-				
 					<Typography variant="body2" color="textSecondary">
 						{' '}
 						{/* converts toISOSstring to relative time from now */}

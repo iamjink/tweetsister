@@ -20,7 +20,7 @@ import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import { connect } from 'react-redux';
 import { logoutUser, uploadImage } from '../redux/actions/userActions';
 
-const styles = (theme) => ({
+const styles = {
 	paper: {
 		padding: 20
 	},
@@ -66,7 +66,7 @@ const styles = (theme) => ({
 			margin: '20px 10px'
 		}
 	}
-});
+};
 
 class Profile extends Component {
 	//profile image upload, and replacing old profile image in db
