@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
 import Comments from './Comments';
+import CommentForm from './CommentForm';
 //MUI
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -18,7 +19,7 @@ import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 //Redux stuff
 import { connect } from 'react-redux';
-import { getScream } from '../../redux/actions/dataActions';
+import { getScream, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = {
 	invisibleSeparator: {
@@ -137,6 +138,7 @@ class ScreamDialog extends Component {
 
 	handleClose = () => {
 		this.setState({ open: false });
+		this.props.clearErrors();
 	};
 
 	render() {
@@ -165,14 +167,15 @@ class ScreamDialog extends Component {
 					</Typography>
 					<hr className={classes.invinvisibleSeparator} />
 					<Typography variant="body1">{body}</Typography>
-                    <LikeButton screamId={screamId}/>
-                    <span> {likeCount} likes </span>
-                    <MyButton tip="comments">
+					<LikeButton screamId={screamId} />
+					<span> {likeCount} likes </span>
+					<MyButton tip="comments">
 						<ChatIcon color="primary" />
 					</MyButton>
 					<span>{commentCount} comments</span>
 				</Grid>
 				<hr className={classes.visibleSeparator} />
+				<CommentForm screamId={screamId} />
 				<Comments comments={comments} />
 			</Grid>
 		);
@@ -194,6 +197,7 @@ class ScreamDialog extends Component {
 }
 
 ScreamDialog.propTypes = {
+	clearErrors: PropTypes.func.isRequired,
 	getScream: PropTypes.func.isRequired,
 	screamId: PropTypes.string.isRequired,
 	userHandle: PropTypes.string.isRequired,
@@ -207,7 +211,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-	getScream
+	getScream,
+	clearErrors
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(ScreamDialog));
