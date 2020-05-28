@@ -117,6 +117,13 @@ class PostScream extends Component {
 		body: '',
 		errors: {}
 	};
+	componentWillReceiveProps(nextProps) {
+		if (!nextProps.UI.errors && !nextProps.UI.loading){
+            this.setState({body:''});
+            this.handleClose()
+        }
+    }
+    
 	handleOpen = () => {
 		this.setState({
 			open: true
@@ -125,8 +132,18 @@ class PostScream extends Component {
 
 	handleClose = () => {
 		this.setState({
-			open: false
+            open: false, 
+            errors: {}
 		});
+	};
+
+	handleChange = (event) => {
+		this.setState({ [event.target.name]: event.target.value });
+	};
+
+	handleSubmit = (event) => {
+		event.preventDefault();
+		this.props.postScream({ body: this.state.body });
 	};
 
 	render() {
@@ -147,7 +164,7 @@ class PostScream extends Component {
 							<TextField
 								name="body"
 								type="text"
-								label="Post!"
+								label="Tell your story!"
 								multiline
 								rows="3"
 								placehoder="Make a post!"
@@ -164,7 +181,7 @@ class PostScream extends Component {
 								className={classes.submitButton}
 								disabled={loading}
 							>
-								{loading && (<CircularProgress size={30} className={classes.progressSpinner} />)}
+								{loading && <CircularProgress size={30} className={classes.progressSpinner} />}
 								Submit
 							</Button>
 						</form>
