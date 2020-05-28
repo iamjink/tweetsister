@@ -14,19 +14,22 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 //Redux
 import { connect } from 'react-redux';
-import { postScream } from '../redux/actions/dataActions';
+import { postScream, clearErrors } from '../redux/actions/dataActions';
 
 const styles = {
 	submitButton: {
-		position: 'relative'
+        position: 'relative',
+        float: 'right',
+        marginTop: 10,
+        marginBottom: 10
 	},
 	progressSpinner: {
-		positoin: 'absolute'
+		position: 'absolute'
 	},
 	closeButton: {
 		position: 'absolute',
-		left: '90%',
-		top: '10%'
+		left: '91%',
+		top: '6%'
 	},
 	typography: {
 		useNextVariants: true
@@ -118,9 +121,14 @@ class PostScream extends Component {
 		errors: {}
 	};
 	componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+            this.setState({
+              errors: nextProps.UI.errors
+            });
+          }
+          
 		if (!nextProps.UI.errors && !nextProps.UI.loading){
-            this.setState({body:''});
-            this.handleClose()
+            this.setState({body:'', open: false,  errors: {}});
         }
     }
     
@@ -131,6 +139,7 @@ class PostScream extends Component {
 	};
 
 	handleClose = () => {
+        this.props.clearErrors();
 		this.setState({
             open: false, 
             errors: {}
@@ -193,7 +202,8 @@ class PostScream extends Component {
 }
 
 PostScream.propTypes = {
-	postScream: PropTypes.func.isRequired,
+    postScream: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
 	UI: PropTypes.object.isRequired
 };
 
@@ -201,4 +211,4 @@ const mapStateToProps = (state) => ({
 	UI: state.UI
 });
 
-export default connect(mapStateToProps, { postScream })(withStyles(styles)(PostScream));
+export default connect(mapStateToProps, { postScream, clearErrors })(withStyles(styles)(PostScream));
