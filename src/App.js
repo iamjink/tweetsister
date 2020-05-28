@@ -15,7 +15,7 @@ import login from './pages/login';
 import signup from './pages/signup';
 import jwtDecode from 'jwt-decode';
 //components
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 import AuthRoute from './util/AuthRoute';
 import axios from 'axios';
 
