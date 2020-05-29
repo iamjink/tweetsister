@@ -189,8 +189,8 @@ class ScreamDialog extends Component {
 					</Typography>
 					<hr className={classes.invisibleSeparator} />
 					<Typography variant="body1">{body}</Typography>
-					<LikeButton screamId={screamId} />
-					<span>{likeCount} likes</span>
+					{/* <LikeButton screamId={screamId} /> */}
+					{/* <span>{likeCount} likes</span> */}
 					<MyButton tip="comments">
 						<ChatIcon color="primary" />
 					</MyButton>
