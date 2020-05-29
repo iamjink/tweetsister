@@ -129,14 +129,36 @@ const styles = {
 
 class ScreamDialog extends Component {
 	state = {
-		open: false
+		open: false,
+		oldPath: '',
+		newPath: ''
 	};
+
+	componentDidMount() {
+		if (this.props.openDialog) {
+			this.handleOpen();
+		}
+	}
+
 	handleOpen = () => {
-		this.setState({ open: true });
+		//original url
+		let oldPath = window.location.pathname;
+
+		const { userHandle, screamId } = this.props;
+		const newPath = `/users/${userHandle}/scream/${screamId}`;
+
+		if (oldPath === newPath) oldPath = `/users/${userHandle}`;
+
+		//changing url to the post url when expanding post to a dialog
+		window.history.pushState(null, null, newPath);
+
+		this.setState({ open: true, oldPath, newPath });
 		this.props.getScream(this.props.screamId);
 	};
 
 	handleClose = () => {
+		//when dialog is closed, the url changes back
+		window.history.pushState(null, null, this.state.oldPath);
 		this.setState({ open: false });
 		this.props.clearErrors();
 	};
@@ -158,17 +180,17 @@ class ScreamDialog extends Component {
 					<img src={userImage} alt="Profile" className={classes.profileImage} />
 				</Grid>
 				<Grid item sm={7}>
-					<Typography variant="h5" component={Link} color="primary" to={`/users/${userHandle}`}>
+					<Typography component={Link} color="primary" variant="h5" to={`/users/${userHandle}`}>
 						@{userHandle}
 					</Typography>
 					<hr className={classes.invisibleSeparator} />
 					<Typography variant="body2" color="textSecondary">
 						{dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
 					</Typography>
-					<hr className={classes.invinvisibleSeparator} />
+					<hr className={classes.invisibleSeparator} />
 					<Typography variant="body1">{body}</Typography>
 					<LikeButton screamId={screamId} />
-					<span> {likeCount} likes </span>
+					<span>{likeCount} likes</span>
 					<MyButton tip="comments">
 						<ChatIcon color="primary" />
 					</MyButton>
