@@ -167,7 +167,7 @@ class PostScream extends Component {
 					<MyButton tip="Close" onClick={this.handleClose} tipClassName={classes.closeButton}>
 						<CloseIcon />
 					</MyButton>
-					<DialogTitle> Post a new scream</DialogTitle>
+					<DialogTitle> Make a new post!</DialogTitle>
 					<DialogContent>
 						<form onSubmit={this.handleSubmit}>
 							<TextField
